@@ -1,0 +1,74 @@
+#! python3
+'''Defines classes to describe a person and a drink, and to link the two.
+
+NOTE
+- All classes have a `.to_list()` method and a `.from_list()`
+  class method. This is essential for the `app.py` program to work!
+'''
+
+# CLASSES
+class Person:
+    '''Describe a person.'''
+    def __init__(self, name, age, sex):
+        self.name = name
+        self.age = age
+        self.sex = sex
+
+    def __repr__(self):
+        return f'{self.name}, {self.age} years old. {self.sex.title()}.'
+    
+    def to_list(self):
+        '''Return list of attributes.'''
+        return [self.name, self.age, self.sex]
+    
+    @classmethod
+    def from_list(cls, list_strings):
+        '''Initialise class instance from list of 3 strings.'''
+        name, age, sex = list_strings
+        return cls(name, int(age), sex)
+        
+class Drink:
+    '''Describe a drink.'''
+    def __init__(self, name, volume_ml, hot, fizzy):
+        self.name = name
+        self.volume_ml = volume_ml
+        self.hot = hot
+        self.fizzy = fizzy
+    
+    def __repr__(self):
+        temperature = 'hot' if self.hot else 'cold'
+        fizzy = 'fizzy ' if self.fizzy else ''
+        return f'{self.volume_ml} ml of {temperature} {fizzy}{self.name}.'
+    
+    def to_list(self):
+        '''Return list of attributes.'''
+        return [self.name, self.volume_ml, self.hot, self.fizzy]
+    
+    @classmethod
+    def from_list(cls, list_strings):
+        '''Initialise class instance from list of 4 strings.'''
+        name, vol, hot, fizzy = list_strings
+        return cls(name, int(vol), hot == 'True', fizzy == 'True')
+
+class Order:
+    '''Describe one order (person and drink class).'''
+    def __init__(self, person, drink):
+        self.person = person
+        self.drink = drink
+    
+    def __repr__(self):
+        return f'{self.person.name:<15}: {self.drink}'
+    
+    def to_list(self):
+        '''Return list of attributes.'''
+        return self.person.to_list() + self.drink.to_list()
+    
+    @classmethod
+    def from_list(cls, list_strings):
+        '''Initialise class instance from list of 7 strings.'''
+        return cls(Person.from_list(list_strings[:3]),
+                   Drink.from_list(list_strings[3:]))
+
+class Preference(Order):
+    '''Describe one preference (person and drink class).'''
+    pass
