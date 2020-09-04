@@ -1,0 +1,12 @@
+# Ignore some top-level directories 
+/.vscode/
+/Lib/
+/Scripts
+
+# Ignore all pycache folders recursively
+__pycache__/
+
+# Ignore all coverage and venv files recursively
+.coverage
+pyvenv.cfg
+.pytest_cache
