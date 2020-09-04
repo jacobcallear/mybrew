@@ -1,7 +1,7 @@
 # Ignore some top-level directories 
 /.vscode/
 /Lib/
-/Scripts
+/Scripts/
 
 # Ignore all pycache folders recursively
 __pycache__/
