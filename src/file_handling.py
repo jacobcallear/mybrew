@@ -1,6 +1,8 @@
 '''Defines functions to create class instances from csv files.'''
 import csv
 
+import pymysql
+
 def write_classes_to_csv(class_list, file_path):
     '''Writes class instance attributes to a csv.'''
     with open(file_path, 'w', newline='') as f:
@@ -26,3 +28,20 @@ def read_classes_from_csv(cls, file_path):
             instances.append(instance)
     print(f'Read data from {file_path}')
     return instances
+
+def read_classes_from_mysql(cls, table_name):
+    '''Returns list of one class instance for each row in MySQL table.'''
+    connection = pymysql.connect(
+        "localhost",
+        "root",
+        "terrorhurtz-18",
+        "rounds"
+    )
+    cursor = connection.cursor()
+    cursor.execute(f'SELECT * FROM {table_name}')
+    rows = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    print(f'Read data from rounds.{table_name}')
+    return [cls.from_list(row)
+            for row in rows]

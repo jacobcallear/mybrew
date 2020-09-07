@@ -3,7 +3,7 @@
 from os import system
 
 from src.classes import Drink, Order, Person, Preference
-from src.file_handling import read_classes_from_csv, write_classes_to_csv
+from src.file_handling import read_classes_from_csv, write_classes_to_csv, read_classes_from_mysql
 from src.menu import get_index_input, get_input, print_list, select_option
 
 DRINKS_PATH = 'data/drinks.csv'
@@ -38,7 +38,7 @@ while True:
             write_classes_to_csv(drinks, DRINKS_PATH)
         # Read drinks from csv
         elif option == 3:
-            drinks = read_classes_from_csv(Drink, DRINKS_PATH)
+            drinks = read_classes_from_mysql(Drink, 'drinks')
 
     # ==============================
     # PEOPLE
@@ -58,7 +58,7 @@ while True:
             write_classes_to_csv(people, PEOPLE_PATH)
         # Read people from csv
         elif option == 3:
-            people = read_classes_from_csv(Person, PEOPLE_PATH)
+            people = read_classes_from_mysql(Person, 'people')
     
     # ==============================
     # ROUND

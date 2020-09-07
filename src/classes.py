@@ -48,7 +48,7 @@ class Drink:
     def from_list(cls, list_strings):
         '''Initialise class instance from list of 4 strings.'''
         name, vol, hot, fizzy = list_strings
-        return cls(name, int(vol), hot == 'True', fizzy == 'True')
+        return cls(name, int(vol), hot == True, fizzy == True)
 
 class Order:
     '''Describe one order (person and drink class).'''
