@@ -3,7 +3,7 @@
 from os import system
 
 from src.classes import Drink, Order, Person, Preference
-from src.file_handling import read_classes_from_mysql, write_classes_to_mysql
+from src.data_handling import read_classes_from_mysql, write_classes_to_mysql
 from src.menu import get_index_input, get_input, print_list, select_option
 
 drinks, people, rounds, preferences = [], [], [], []
