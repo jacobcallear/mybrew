@@ -3,14 +3,8 @@
 from os import system
 
 from src.classes import Drink, Order, Person, Preference
-from src.file_handling import read_classes_from_csv, write_classes_to_csv,\
-                              read_classes_from_mysql, write_classes_to_mysql
+from src.file_handling import read_classes_from_mysql, write_classes_to_mysql
 from src.menu import get_index_input, get_input, print_list, select_option
-
-DRINKS_PATH = 'data/drinks.csv'
-PEOPLE_PATH = 'data/people.csv'
-ROUNDS_PATH = 'data/rounds.csv'
-PREFS_PATH = 'data/prefs.csv'
 
 drinks, people, rounds, preferences = [], [], [], []
         
@@ -91,10 +85,10 @@ while True:
             print_list('round', rounds)
         # Save rounds to csv
         elif option == 2:
-            write_classes_to_csv(rounds, ROUNDS_PATH)
+            write_classes_to_mysql(rounds, 'rounds')
         # Read rounds from csv
         elif option == 3:
-            rounds = read_classes_from_csv(Order, ROUNDS_PATH)
+            rounds = read_classes_from_mysql(Order, 'rounds')
             
     # ==============================
     # PREFERENCES
@@ -117,9 +111,9 @@ while True:
         elif option == 1:
             print_list('preferences', preferences)
         elif option == 2:
-            write_classes_to_csv(preferences, PREFS_PATH)
+            write_classes_to_mysql(preferences, 'preferences')
         elif option == 3:
-            preferences = read_classes_from_csv(Preference, PREFS_PATH)
+            preferences = read_classes_from_mysql(Preference, 'preferences')
             
     #==============================
     # OTHER
