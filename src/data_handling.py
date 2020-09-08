@@ -11,7 +11,7 @@ CREDENTIALS = {
     'db': 'rounds'
 }
 
-def read_classes_from_mysql(cls, table_name, credentials = CREDENTIALS):
+def read_classes_from_mysql(cls, table_name, credentials=CREDENTIALS):
     '''Returns list of one class instance for each row in MySQL table.'''
     connection = pymysql.connect(**credentials)
     try:
@@ -28,13 +28,16 @@ def read_classes_from_mysql(cls, table_name, credentials = CREDENTIALS):
         cursor.close()
         connection.close()
 
-def write_classes_to_mysql(class_list, table_name, credentials = CREDENTIALS):
+def write_classes_to_mysql(class_list, table_name, credentials=CREDENTIALS, truncate=True):
     '''Write class instance attributes to a MySQL table.'''
     connection = pymysql.connect(**credentials)
     # List attributes of each class instance
     rows = (cls.to_list() for cls in class_list)
     try:
         cursor = connection.cursor()
+        # Clear table to avoid duplicating rows
+        if truncate:
+            cursor.execute(f'TRUNCATE TABLE {table_name}')
         for row in rows:
             # For each class instance, add attributes to table row
             cursor.execute(dedent(f'''
