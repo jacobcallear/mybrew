@@ -1,20 +1,13 @@
-# Overview
+# Jacob's Mini Project
+
+Provides an interactive menu to create lists of people and drink objects, and associate them with each other as preferences and orders.
 
 ## Requirements
 
-- Read people from a csv
-- Write people to a csv file
-- Read drinks from a csv file
-- Write drinks to a csv file
-- Print out all people/drinks
-- Write out to the files when you exit the program
-- Classes for Person, Drink, Order, Preference
-- Create a round:
-    - Loop through each person
-    - Display the drinks you've read in
-    - Let the user select one of the drinks
-    - Create an Order object
-    - Add order to round or orders list
-- Do the above but with Preference
-- Classes, file handling in separate files
-- Have an interactive menu
+- MySQL database containing four tables called:
+    - `people`
+    - `drinks`
+    - `rounds`
+    - `preferences`
+- Appropriate MySQL login credentials in `CREDENTIALS` dictionary in `src/data_handling.py`
+- Python module `PyMySQL` version >= `0.10.0`
