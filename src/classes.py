@@ -23,7 +23,7 @@ class Person:
     
     @classmethod
     def from_list(cls, list_strings):
-        '''Initialise class instance from list of 3 strings.'''
+        '''Initialise class instance from list of 3 attributes.'''
         name, age, sex = list_strings
         return cls(name, int(age), sex)
         
@@ -42,11 +42,11 @@ class Drink:
     
     def to_list(self):
         '''Return list of attributes.'''
-        return [self.name, self.volume_ml, self.hot, self.fizzy]
+        return [self.name, self.volume_ml, int(self.hot), int(self.fizzy)]
     
     @classmethod
     def from_list(cls, list_strings):
-        '''Initialise class instance from list of 4 strings.'''
+        '''Initialise class instance from list of 4 attributes.'''
         name, vol, hot, fizzy = list_strings
         return cls(name, int(vol), hot == True, fizzy == True)
 
@@ -65,7 +65,7 @@ class Order:
     
     @classmethod
     def from_list(cls, list_strings):
-        '''Initialise class instance from list of 7 strings.'''
+        '''Initialise class instance from list of 7 attributes.'''
         return cls(Person.from_list(list_strings[:3]),
                    Drink.from_list(list_strings[3:]))
 
