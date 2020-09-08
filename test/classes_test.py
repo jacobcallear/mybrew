@@ -35,7 +35,7 @@ class TestPerson:
     
     def test_from_list(self):
         '''Test `from_list()` initialiser.'''
-        list_strings = [str(i) for i in (self._name, self._age, self._sex)]
+        list_strings = [self._name, self._age, self._sex]
         person_from_strings = Person.from_list(list_strings)
         assert person_from_strings.name == self._name
         assert person_from_strings.age == self._age
@@ -53,8 +53,8 @@ class TestDrink:
         '''Create new drink instance for each test.'''
         self._name = 'Fishoh'
         self._volume_ml = 120
-        self._hot = True
-        self._fizzy = False
+        self._hot = 1
+        self._fizzy = 0
         self._drink = Drink(self._name, self._volume_ml, self._hot, self._fizzy)
     
     def test_set_attrs(self):
@@ -71,9 +71,8 @@ class TestDrink:
     
     def test_from_list(self):
         '''Test `from_list()` initialiser.'''
-        list_strings = [str(i) for i in (self._name, self._volume_ml,
-                                         self._hot, self._fizzy)]
-        drink_from_list = Drink.from_list(list_strings)
+        test_list = [self._name, self._volume_ml, self._hot, self._fizzy]
+        drink_from_list = Drink.from_list(test_list)
         assert drink_from_list.name == self._name
         assert drink_from_list.volume_ml == self._volume_ml
         assert drink_from_list.hot == self._hot
@@ -87,7 +86,7 @@ class TestOrder:
     def _set_attrs(self):
         '''Create new order instance for each test.'''
         self._person = Person('Brohampton', 208, 'female')
-        self._drink = Drink('Orange Juice', 500, hot=False, fizzy=False)
+        self._drink = Drink('Orange Juice', 500, hot=0, fizzy=0)
         self._order = Order(self._person, self._drink)
     
     def test_set_attrs(self):
