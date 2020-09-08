@@ -102,7 +102,7 @@ def get_index_input(text, list_):
     '''Makes sure user enters a valid index (starts from 1).'''
     length = len(list_)
     if length == 0:
-        raise Exception('Empty list')
+        raise ValueError('Empty list')
     while True:
         index = get_input(f'{text} (number from list)', int)
         if 0 < index <= length:
