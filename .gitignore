@@ -1,5 +1,6 @@
 # Ignore some top-level directories 
 /.vscode/
+/Include/
 /Lib/
 /Scripts/
 
