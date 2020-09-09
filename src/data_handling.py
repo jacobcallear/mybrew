@@ -43,6 +43,13 @@ def write_classes_to_mysql(class_list, table_name, credentials=CREDENTIALS, trun
             cursor.execute(dedent(f'''
                 INSERT INTO {table_name}
                 VALUES({to_sql_value_string(row)});'''))
+    # Do not change database if a row fails
+    except Exception as e:
+        print('Error inserting rows')
+        print(e)
+        connection.rollback()
+    # If went smoothly, commit changes
+    else:
         connection.commit()
         print(f'Saved data from rounds.{table_name}')
     finally:
