@@ -7,7 +7,10 @@ from src.data_handling import read_classes_from_mysql, write_classes_to_mysql
 from src.menu import get_index_input, get_input, print_list, select_option
 
 drinks, people, rounds, preferences = [], [], [], []
-        
+# Note whether already read in data - if so, truncate table before writing
+# to avoid duplicating rows
+read_drinks, read_people, read_rounds, read_preferences = (False for _ in range(4))
+
 while True:
     # Choose option
     try:
@@ -28,12 +31,14 @@ while True:
         # Print drinks
         elif option == 1:
             print_list('drinks', drinks)
-        # Save drinks to csv
+        # Save drinks to MySQL table
         elif option == 2:
-            write_classes_to_mysql(drinks, 'drinks')
-        # Read drinks from csv
+            write_classes_to_mysql(drinks, 'drinks',
+                                   truncate=read_drinks)
+        # Read drinks from MySQL table
         elif option == 3:
             drinks = read_classes_from_mysql(Drink, 'drinks')
+            read_drinks = True
 
     # ==============================
     # PEOPLE
@@ -48,12 +53,14 @@ while True:
         # Print people
         elif option == 1:
             print_list('people', people)
-        # Save people to csv
+        # Save people to MySQL table
         elif option == 2:
-            write_classes_to_mysql(people, 'people')
-        # Read people from csv
+            write_classes_to_mysql(people, 'people',
+                                   truncate=read_people)
+        # Read people from MySQL table
         elif option == 3:
             people = read_classes_from_mysql(Person, 'people')
+            read_people = True
     
     # ==============================
     # ROUND
@@ -83,12 +90,14 @@ while True:
         # Print rounds
         elif option == 1:
             print_list('round', rounds)
-        # Save rounds to csv
+        # Save rounds to MySQL table
         elif option == 2:
-            write_classes_to_mysql(rounds, 'rounds')
-        # Read rounds from csv
+            write_classes_to_mysql(rounds, 'rounds',
+                                   truncate=read_rounds)
+        # Read rounds from MySQL table
         elif option == 3:
             rounds = read_classes_from_mysql(Order, 'rounds')
+            read_rounds = True
             
     # ==============================
     # PREFERENCES
@@ -111,9 +120,11 @@ while True:
         elif option == 1:
             print_list('preferences', preferences)
         elif option == 2:
-            write_classes_to_mysql(preferences, 'preferences')
+            write_classes_to_mysql(preferences, 'preferences',
+                                   truncate=read_preferences)
         elif option == 3:
             preferences = read_classes_from_mysql(Preference, 'preferences')
+            read_preferences = True
             
     #==============================
     # OTHER
