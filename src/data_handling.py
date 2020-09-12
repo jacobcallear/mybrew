@@ -21,28 +21,40 @@ def read_classes_from_mysql(cls, table_name, credentials=CREDENTIALS):
         # Return list of class instances
         classes = []
         while row := cursor.fetchone():
-            classes.append(cls.from_list(row))
+            # Ignore first field (ID)
+            classes.append(cls.from_list(row[1:]))
         print(f'Read data from rounds.{table_name}')
         return classes
     finally:
         cursor.close()
         connection.close()
 
-def write_classes_to_mysql(class_list, table_name, credentials=CREDENTIALS, truncate=True):
+def write_classes_to_mysql(class_list, table, credentials=CREDENTIALS, truncate=False):
     '''Write class instance attributes to a MySQL table.'''
     connection = pymysql.connect(**credentials)
     # List attributes of each class instance
     rows = (cls.to_list() for cls in class_list)
     try:
         cursor = connection.cursor()
+        # Get field names
+        cursor.execute(dedent(f'''\
+            SHOW COLUMNS
+            FROM {table}'''))
+        fields = (field for field, *_ in cursor.fetchall())
+        # Ignore ID field
+        next(fields)
+        fields = ', '.join(fields)
         # Clear table to avoid duplicating rows
         if truncate:
-            cursor.execute(f'TRUNCATE TABLE {table_name}')
+            cursor.execute(f'TRUNCATE TABLE {table}')
         for row in rows:
             # For each class instance, add attributes to table row
-            cursor.execute(dedent(f'''
-                INSERT INTO {table_name}
-                VALUES({to_sql_value_string(row)});'''))
+            cursor.execute(dedent(f'''\
+                INSERT INTO
+                    {table} ({fields})
+                VALUES(
+                    {to_sql_value_string(row)}
+                );'''))
     # Do not change database if a row fails
     except Exception as e:
         print('Error inserting rows')
@@ -51,7 +63,7 @@ def write_classes_to_mysql(class_list, table_name, credentials=CREDENTIALS, trun
     # If went smoothly, commit changes
     else:
         connection.commit()
-        print(f'Saved data from rounds.{table_name}')
+        print(f'Saved data from rounds.{table}')
     finally:
         cursor.close()
         connection.close()
