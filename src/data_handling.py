@@ -11,19 +11,19 @@ CREDENTIALS = {
     'db': 'rounds'
 }
 
-def read_classes_from_mysql(cls, table_name, credentials=CREDENTIALS):
+def read_classes_from_mysql(cls, table, credentials=CREDENTIALS):
     '''Returns list of one class instance for each row in MySQL table.'''
     connection = pymysql.connect(**credentials)
     try:
         # Read table from MySQL
         cursor = connection.cursor()
-        cursor.execute(f'SELECT * FROM {table_name};')
+        cursor.execute(f'SELECT * FROM {table};')
         # Return list of class instances
         classes = []
         while row := cursor.fetchone():
             # Ignore first field (ID)
             classes.append(cls.from_list(row[1:]))
-        print(f'Read data from rounds.{table_name}')
+        print(f'Read data from {credentials["db"]}.{table}')
         return classes
     finally:
         cursor.close()
@@ -63,7 +63,7 @@ def write_classes_to_mysql(class_list, table, credentials=CREDENTIALS, truncate=
     # If went smoothly, commit changes
     else:
         connection.commit()
-        print(f'Saved data from rounds.{table}')
+        print(f'Saved data to rounds.{table}')
     finally:
         cursor.close()
         connection.close()

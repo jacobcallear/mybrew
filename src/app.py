@@ -4,12 +4,32 @@ from os import system
 
 from src.classes import Drink, Order, Person, Preference
 from src.data_handling import read_classes_from_mysql, write_classes_to_mysql
-from src.menu import get_index_input, get_input, print_list, select_option
+from src.menu import get_index_input, get_input, print_lists, select_option
 
-drinks, people, rounds, preferences = [], [], [], []
-# Note whether already read in data - if so, truncate table before writing
-# to avoid duplicating rows
-read_drinks, read_people, read_rounds, read_preferences = (False for _ in range(4))
+def swap_lists(dict_of_lists):
+    '''Extends 'from-db' list with contents of 'from-user', then clears 'from-user'.
+    
+    This prevents duplication of rows when reading / writing data.
+    '''
+    dict_of_lists['from-db'].extend(dict_of_lists['from-user'])
+    dict_of_lists['from-user'].clear()
+
+def want_to_overwrite(list_, name='round'):
+    '''Checks if user wants to overwrite a populated list.'''
+    if list_ != []:
+        print(f'A {name} is currently saved, and will be overwritten.')
+        overwrite = get_input('"y" to continue, "n" to cancel', bool)
+        if not overwrite:
+            return False
+    return True
+
+# Keep separate lists of user-inputted data and data read from database
+# This avoids duplicating rows
+drinks, people, rounds, preferences = (
+    {'from-db': [], 'from-user': []}
+    for _ in range(4)
+)
+rounds = []
 
 while True:
     # Choose option
@@ -27,18 +47,18 @@ while True:
             volume = get_input('drink volume (ml)', int)
             hot = get_input('"y" if drink is hot, otherwise "n"', bool)
             fizzy = get_input('"y" if drink is fizzy, otherwise "n"', bool)
-            drinks.append(Drink(name, volume, hot, fizzy))
+            drinks['from-user'].append(Drink(name, volume, hot, fizzy))
         # Print drinks
         elif option == 1:
-            print_list('drinks', drinks)
+            print_lists(drinks['from-db'], drinks['from-user'],
+                       title='drinks', pause=True)
         # Save drinks to MySQL table
         elif option == 2:
-            write_classes_to_mysql(drinks, 'drinks',
-                                   truncate=read_drinks)
+            write_classes_to_mysql(drinks['from-user'], 'drinks')
+            swap_lists(drinks)
         # Read drinks from MySQL table
         elif option == 3:
-            drinks = read_classes_from_mysql(Drink, 'drinks')
-            read_drinks = True
+            drinks['from-db'] = read_classes_from_mysql(Drink, 'drinks')
 
     # ==============================
     # PEOPLE
@@ -49,18 +69,18 @@ while True:
             name = get_input("person's name")
             age = get_input(f"{name}'s age in years", int)
             sex = get_input(f"{name}'s sex").lower()
-            people.append(Person(name, age, sex))
+            people['from-user'].append(Person(name, age, sex))
         # Print people
         elif option == 1:
-            print_list('people', people)
+            print_lists(people['from-db'], people['from-user'],
+                        title='people', pause=True)
         # Save people to MySQL table
         elif option == 2:
-            write_classes_to_mysql(people, 'people',
-                                   truncate=read_people)
+            write_classes_to_mysql(people['from-user'], 'people')
+            swap_lists(people)
         # Read people from MySQL table
         elif option == 3:
-            people = read_classes_from_mysql(Person, 'people')
-            read_people = True
+            people['from-db'] = read_classes_from_mysql(Person, 'people')
     
     # ==============================
     # ROUND
@@ -68,36 +88,37 @@ while True:
         # Make a round
         if option == 0:
             # Check drinks and people are not empty
-            if drinks == []:
+            all_drinks = drinks['from-db'] + drinks['from-user']
+            all_people = people['from-db'] + people['from-user']
+            if all_drinks == []:
                 print('Round cannot be created as no drinks are saved.')
                 continue
-            if people == []:
+            if all_people == []:
                 print('Round cannot be created as no people are saved.')
                 continue
             # Clear rounds after warning
-            if rounds != []:
-                print('A round is currently saved, and will be overwritten.')
-                overwrite = get_input('"y" to continue, "n" to cancel', bool)
-                if not overwrite:
-                    continue
+            if not want_to_overwrite(rounds):
+                continue
             rounds = []
             # Loop through people, choose a drink for each
-            print_list('drinks', drinks, pause=False)
-            for person in people:
+            print_lists(all_drinks, title='drinks', pause=False)
+            for person in all_people:
                 drink = get_index_input(f"{person.name}'s favourite drink",
-                                        drinks)
+                                        all_drinks)
                 rounds.append(Order(person, drink))
         # Print rounds
         elif option == 1:
-            print_list('round', rounds)
-        # Save rounds to MySQL table
+            print_lists(rounds, title='round', pause=True)
+        # Save rounds to MySQL table - OVERWRITE previous round
         elif option == 2:
-            write_classes_to_mysql(rounds, 'rounds',
-                                   truncate=read_rounds)
+            if not want_to_overwrite(rounds):
+                continue
+            write_classes_to_mysql(rounds, 'rounds', truncate=True)
         # Read rounds from MySQL table
         elif option == 3:
+            if not want_to_overwrite(rounds):
+                continue
             rounds = read_classes_from_mysql(Order, 'rounds')
-            read_rounds = True
             
     # ==============================
     # PREFERENCES
@@ -105,26 +126,30 @@ while True:
         # Add a drink preference for a person
         if option == 0:
             # Check drinks and people are not empty
-            if people == []:
-                print('Preference cannot be added as no drinks are saved.')
-                continue
-            if drinks == []:
+            all_drinks = drinks['from-db'] + drinks['from-user']
+            all_people = people['from-db'] + people['from-user']
+            if all_drinks == []:
                 print('Preference cannot be added as no people are saved.')
                 continue
-            print_list('people', people)
-            person = get_index_input('a person', people)
-            print_list('drinks', drinks, pause=False)
-            drink = get_index_input('a drink', drinks)
-            preferences.append(Preference(person, drink))
+            if all_people == []:
+                print('Preference cannot be added as no drinks are saved.')
+                continue
+            print_lists(all_people, title='people', pause=False)
+            person = get_index_input('a person', all_people)
+            print_lists(all_drinks, title='drinks', pause=False)
+            drink = get_index_input('a drink', all_drinks)
+            preferences['from-user'].append(Preference(person, drink))
         # Print preferences
         elif option == 1:
-            print_list('preferences', preferences)
+            print_lists(preferences['from-db'], preferences['from-user'],
+                        title='preferences')
         elif option == 2:
-            write_classes_to_mysql(preferences, 'preferences',
-                                   truncate=read_preferences)
+            write_classes_to_mysql(preferences['from-user'],
+                                   table='preferences')
+            swap_lists(preferences)
         elif option == 3:
-            preferences = read_classes_from_mysql(Preference, 'preferences')
-            read_preferences = True
+            preferences['from-db'] = read_classes_from_mysql(Preference,
+                                                             table='preferences')
             
     #==============================
     # OTHER
