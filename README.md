@@ -11,3 +11,5 @@ Provides an interactive menu to create lists of people and drink objects, and as
     - `preferences`
 - Appropriate MySQL login credentials in `CREDENTIALS` dictionary in `src/data_handling.py`
 - Python module `PyMySQL` version >= `0.10.0`
+
+bash script addition
