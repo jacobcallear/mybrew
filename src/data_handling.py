@@ -26,6 +26,9 @@ def read_classes_from_mysql(cls, table, credentials=CREDENTIALS):
             classes.append(cls.from_list(row[1:]))
         print(f'Read data from {credentials["db"]}.{table}')
         return classes
+    except Exception as e:
+        print('Error reading from database')
+        print(e)
     finally:
         cursor.close()
         connection.close()
