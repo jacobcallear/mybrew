@@ -115,8 +115,7 @@ def get_index_input(text, list_):
 
 def print_lists(*lists, title='', pause=True):
     '''Prints numbered items of lists.'''
-    title = title.title()
-    print(f'{title}:')
+    print(f'{title.title()}:')
     i = 0
     empty = True
     for list_ in lists:

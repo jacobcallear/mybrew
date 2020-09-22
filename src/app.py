@@ -6,6 +6,8 @@ from src.classes import Drink, Order, Person, Preference
 from src.data_handling import read_classes_from_mysql, write_classes_to_mysql
 from src.menu import get_index_input, get_input, print_lists, select_option
 
+# FUNCTIONS
+
 def swap_lists(dict_of_lists):
     '''Extends 'from-db' list with contents of 'from-user', then clears 'from-user'.
     
@@ -22,6 +24,8 @@ def want_to_overwrite(list_, name='round'):
         if not overwrite:
             return False
     return True
+
+# APP START
 
 # Keep separate lists of user-inputted data and data read from database
 # This avoids duplicating rows

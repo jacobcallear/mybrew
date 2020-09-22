@@ -8,7 +8,7 @@ NOTE
 
 # CLASSES
 class Person:
-    '''Describe a person.'''
+    '''Describe a person's name, age, and sex.'''
     def __init__(self, name, age, sex):
         self.name = name
         self.age = age
@@ -28,7 +28,7 @@ class Person:
         return cls(name, int(age), sex)
         
 class Drink:
-    '''Describe a drink.'''
+    '''Describe a drink's name, volume (ml), temperature, and fizziness.'''
     def __init__(self, name, volume_ml, hot, fizzy):
         self.name = name
         self.volume_ml = volume_ml
