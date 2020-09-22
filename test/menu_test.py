@@ -1,5 +1,5 @@
 #! python3
-'''Tests menu module. Requires user input.'''
+'''Test `menu` module.'''
 from random import randint
 
 import pytest
@@ -7,8 +7,9 @@ import pytest
 from src.menu import get_index_input, get_input, print_lists, select_option
 
 def test_get_input(monkeypatch):
-    '''Tests that `get_input()` returns correct type and value.'''
+    '''Ensure `get_input` function returns correct type and value.'''
     def inner_test(monkeypatch, user_input, expected_output):
+        '''Assert expected output == actual output'''
         # Arrange
         monkeypatch.setattr('builtins.input', lambda _: user_input)
         # Act
@@ -27,7 +28,7 @@ def test_get_input(monkeypatch):
     inner_test(monkeypatch, 'n', expected_output = False)
 
 def test_get_index_input(monkeypatch):
-    '''Tests `get_index_input` function.
+    '''Ensure `get_index_input` function returns correct item from list.
     NB: Returned indexes start from 1, not 0.
     '''
     # Arrange
@@ -39,8 +40,34 @@ def test_get_index_input(monkeypatch):
     actual_output = get_index_input('meaningless text', list_)
     # Assert
     assert actual_output == expected_output
-    
-    # Test error raising
+
+def test_get_index_input_error(monkeypatch):
+    '''Ensure `get_index_input` raises ValueError for an empty list.'''
+    # Arrange
+    list_ = []
+    user_input = 'meaningless text'
+    monkeypatch.setattr('builtins.input', lambda _: user_input)
+    # Act, assert
     with pytest.raises(ValueError):
         list_ = []
         get_index_input('meaningless text', list_)
+
+def test_select_option(monkeypatch):
+    '''Test `select_option` function.'''
+    # Arrange
+    user_input = '1'
+    monkeypatch.setattr('builtins.input', lambda _: user_input)
+    expected_output = (int(user_input), int(user_input))
+    # Act
+    actual_output = select_option()
+    # Assert
+    assert actual_output == expected_output
+
+def test_select_option_error(monkeypatch):
+    '''Ensure `select_option` raises ValueError when choice out of range'''
+    # Arrange
+    user_input = '5'
+    monkeypatch.setattr('builtins.input', lambda _: user_input)
+    # Act, assert
+    with pytest.raises(ValueError):
+        select_option()

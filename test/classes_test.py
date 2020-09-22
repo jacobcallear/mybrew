@@ -1,14 +1,12 @@
 #! python3
-'''Test person class
-
-NOTE
-    - All test methods must start with `test` to be run.
-'''
+'''Test Person, Drink, Order classes.'''
 import pytest
 
 from src.classes import Person, Drink, Order
 
 class TestPerson:
+    '''Test Person class.
+    Person(name=str, age=int, sex=str)'''
     @pytest.fixture(autouse=True)
     def _set_attrs(self):
         '''Create new person instance for each test.'''
@@ -42,8 +40,8 @@ class TestPerson:
         assert person_from_strings.sex == self._sex
 
 class TestDrink:
-    '''Tests Drink class.
-    Drink(name=str, volume_ml=int/float, hot=bool, fizzy=bool).
+    '''Test Drink class.
+    Drink(name=str, volume_ml=int/float, hot=bool, fizzy=bool)
     
     NOTE
         - Doesn't test repr.
@@ -79,7 +77,7 @@ class TestDrink:
         assert drink_from_list.fizzy == self._fizzy
 
 class TestOrder:
-    '''Tests Order class.
+    '''Test Order class.
     Order(person=Person(...), drink=Drink(...))
     '''
     @pytest.fixture(autouse=True)
