@@ -29,6 +29,7 @@ Select an option:
   [1] Print drinks list
   [2] Save drinks to file
   [3] Read drinks from file
+  [4] Return to menu
 ''')
     elif category == 1:
         print('''
@@ -47,6 +48,7 @@ Select an option:
   [1] Print round
   [2] Save round to file
   [3] Read round from file
+  [4] Return to menu
 ''')
     elif category == 3:
         print('''
@@ -56,6 +58,7 @@ Select an option:
   [1] Print preferences
   [2] Save preferences to file
   [3] Read preferences from file
+  [4] Return to menu
 ''')
     elif category == 4:
         print('''
@@ -63,11 +66,12 @@ Select an option:
   OTHER
   [0] Clear screen
   [1] Exit
+  [2] Return to menu
 ''')
     # Get option input as int
     option = get_input('a number', int)
     # Raise error if invalid category + option
-    if category < 4 and option > 3 or option == 4 and option > 1:
+    if category < 4 and option > 4 or category == 4 and option > 2:
         print('INVALID OPTION')
         raise ValueError
     # Return chosen category and option
