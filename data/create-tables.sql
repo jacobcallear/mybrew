@@ -1,7 +1,7 @@
--- Create 4 tables in `brew` database
+-- Create 4 tables in `rounds` database
 
-CREATE DATABASE brew;
-USE brew;
+CREATE DATABASE rounds;
+USE rounds;
 
 -- Drinks table with id
 CREATE TABLE drinks (
