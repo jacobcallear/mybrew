@@ -8,7 +8,6 @@ CREDENTIALS = {
     'host': 'localhost',
     'user': 'root',
     'port': 3306,
-    'password': 'terrorhurtz-18',
     'db': 'mybrew'
 }
 
