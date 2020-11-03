@@ -2,9 +2,9 @@
 '''Provides interactive menu to create 'rounds' of people associated with drinks.'''
 from os import system
 
-from src.classes import Drink, Order, Person, Preference
-from src.data_handling import read_classes_from_mysql, write_classes_to_mysql
-from src.menu import get_index_input, get_input, print_lists, select_option
+from mybrew.classes import Drink, Order, Person, Preference
+from mybrew.data_handling import read_classes_from_mysql, write_classes_to_mysql
+from mybrew.menu import get_index_input, get_input, print_lists, select_option
 
 # FUNCTIONS
 
