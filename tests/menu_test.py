@@ -4,7 +4,7 @@ from random import randint
 
 import pytest
 
-from src.menu import get_index_input, get_input, print_lists, select_option
+from mybrew.menu import get_index_input, get_input, print_lists, select_option
 
 def test_get_input(monkeypatch):
     '''Ensure `get_input` function returns correct type and value.'''

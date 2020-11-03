@@ -2,7 +2,7 @@
 '''Test Person, Drink, Order classes.'''
 import pytest
 
-from src.classes import Person, Drink, Order
+from mybrew.classes import Person, Drink, Order
 
 class TestPerson:
     '''Test Person class.
