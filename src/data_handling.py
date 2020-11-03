@@ -9,7 +9,7 @@ CREDENTIALS = {
     'user': 'root',
     'port': 3306,
     'password': 'terrorhurtz-18',
-    'db': 'rounds'
+    'db': 'mybrew'
 }
 
 def read_classes_from_mysql(cls, table, credentials=CREDENTIALS):

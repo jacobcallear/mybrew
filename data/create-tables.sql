@@ -1,7 +1,7 @@
--- Create 4 tables in `rounds` database
+-- Create 4 tables in `mybrew` database
 
-CREATE DATABASE rounds;
-USE rounds;
+CREATE DATABASE mybrew;
+USE mybrew;
 
 -- Drinks table with id
 CREATE TABLE drinks (
@@ -13,11 +13,6 @@ CREATE TABLE drinks (
     PRIMARY KEY (id)
 );
 
-INSERT INTO
-    drinks (name, volume_ml, hot, fizzy)
-VALUES
-    ('tea', 250, 1, 0);
-
 -- People table with id
 CREATE TABLE people (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
@@ -26,11 +21,6 @@ CREATE TABLE people (
     sex VARCHAR(20) NOT NULL,
     PRIMARY KEY (id)
 );
-
-INSERT INTO
-    people (name, age, sex)
-VALUES
-    ('Bob', 87, 'm');
 
 -- Preferences table with id
 CREATE TABLE preferences (
