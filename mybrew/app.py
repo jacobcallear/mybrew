@@ -5,7 +5,7 @@ from os import system
 from mybrew.classes import Drink, Order, Person, Preference
 from mybrew.data_handling import read_classes_from_mysql, write_classes_to_mysql
 from mybrew.data_handling import CREDENTIALS
-from mybrew.menu import get_index_input, get_input, print_lists, select_option
+from mybrew.cli import get_index_input, get_input, print_lists, select_option
 
 # FUNCTIONS
 
