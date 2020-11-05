@@ -1,13 +1,10 @@
-# Jacob's Mini Project
+# mybrew
 
-Provides an interactive menu to create lists of people and drink objects, and
-associate them with each other as preferences and orders.
+Intuitive command-line interface for a cafe database. Add people and drinks to a
+MySQL database, and associate them with each other as preferences and rounds.
 
 ## Requirements
 
 - [MySQL](https://www.mysql.com/)
-- Appropriate tables in MySQL database - install by running
-  `src/data/create-tables.sql` in MySQL
-- Appropriate MySQL login credentials in `CREDENTIALS` dictionary in
-  `src/data_handling.py`
+- Appropriate MySQL `host`, `user`, and `port` in *mybrew/credentials.py*
 - Python module `PyMySQL` version >= `0.10.0`
