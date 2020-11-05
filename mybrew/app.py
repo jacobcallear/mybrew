@@ -3,8 +3,10 @@
 from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
-from mybrew.data_handling import read_classes_from_mysql, write_classes_to_mysql
-from mybrew.data_handling import CREDENTIALS
+from mybrew.data_handling import (read_classes_from_mysql,
+                                  write_classes_to_mysql,
+                                  are_credentials_valid)
+from mybrew.credentials import credentials
 from mybrew.cli import get_index_input, get_input, print_lists, select_option
 
 # FUNCTIONS
@@ -37,7 +39,13 @@ drinks, people, rounds, preferences = (
 rounds = []
 
 # Get password
-CREDENTIALS['password'] = input('Password: ')
+credentials['password'] = input('Password: ')
+
+if not are_credentials_valid(credentials):
+    # TODO: Ask user for credentials, write to credentials.py
+    # Ask for password again!
+    print('Invalid credentials')
+    pass
 
 while True:
     # Choose option

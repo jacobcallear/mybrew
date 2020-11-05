@@ -3,15 +3,17 @@ from textwrap import dedent
 
 import pymysql
 
-# Set MySQL credentials here
-CREDENTIALS = {
-    'host': 'localhost',
-    'user': 'root',
-    'port': 3306,
-    'db': 'mybrew'
-}
+from credentials import credentials
 
-def read_classes_from_mysql(cls, table, credentials=CREDENTIALS):
+def are_credentials_valid(credentials):
+    try:
+        connection = pymysql.connect(**credentials)
+        connection.close()
+    except:
+        return False
+    return True
+
+def read_classes_from_mysql(cls, table, credentials=credentials):
     '''Returns list of one class instance for each row in MySQL table.'''
     connection = pymysql.connect(**credentials)
     try:
@@ -32,7 +34,7 @@ def read_classes_from_mysql(cls, table, credentials=CREDENTIALS):
         cursor.close()
         connection.close()
 
-def write_classes_to_mysql(class_list, table, credentials=CREDENTIALS, truncate=False):
+def write_classes_to_mysql(class_list, table, credentials=credentials, truncate=False):
     '''Write class instance attributes to a MySQL table.'''
     connection = pymysql.connect(**credentials)
     # List attributes of each class instance
