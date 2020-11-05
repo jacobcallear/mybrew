@@ -3,8 +3,15 @@
 Intuitive command-line interface for a cafe database. Add people and drinks to a
 MySQL database, and associate them with each other as preferences and rounds.
 
-## Requirements
+## Set-Up
 
-- [MySQL](https://www.mysql.com/)
-- Appropriate MySQL `host`, `user`, and `port` in *mybrew/credentials.py*
-- Python module `PyMySQL` version >= `0.10.0`
+1. Install [MySQL](https://www.mysql.com/) and
+   [Python](https://www.python.org/downloads/)
+2. Download or clone `mybrew`
+2. Ensure MySQL credentials (*host*, *port*, and *user*) in
+   *mybrew/mybrew/credentials.py* are correct
+3. Install python requirements
+   ```bash
+   $ cd mybrew
+   $ pip install -r requirement.txt
+   ```
