@@ -112,18 +112,3 @@ def get_index_input(text, list_):
         index = get_input(f'{text} (number from list)', int)
         if 0 < index <= length:
             return list_[index - 1]
-
-def print_lists(*lists, title='', pause=True):
-    '''Prints numbered items of lists.'''
-    print(f'{title.title()}:')
-    i = 0
-    empty = True
-    for list_ in lists:
-        for i, item in enumerate(list_, start = i + 1):
-            print(f'  {i}. {item}')
-            empty = False
-    if empty:
-        print('Empty!')
-    print()
-    if pause:
-        input('Hit "enter" to return to menu: ')

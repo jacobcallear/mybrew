@@ -7,28 +7,9 @@ from mybrew.data_handling import (read_classes_from_mysql,
                                   write_classes_to_mysql,
                                   are_credentials_valid)
 from mybrew.credentials import credentials
-from mybrew.cli import get_index_input, get_input, print_lists, select_option
+from mybrew.cli import get_index_input, get_input, select_option
+from mybrew.list_handling import swap_lists, want_to_overwrite, print_lists
 
-# FUNCTIONS
-
-def swap_lists(dict_of_lists):
-    '''Extends 'from-db' list with contents of 'from-user', then clears 'from-user'.
-    
-    This prevents duplication of rows when reading / writing data.
-    '''
-    dict_of_lists['from-db'].extend(dict_of_lists['from-user'])
-    dict_of_lists['from-user'].clear()
-
-def want_to_overwrite(list_, name='round'):
-    '''Checks if user wants to overwrite a populated list.'''
-    if list_ != []:
-        print(f'A {name} is currently saved, and will be overwritten.')
-        overwrite = get_input('"y" to continue, "n" to cancel', bool)
-        if not overwrite:
-            return False
-    return True
-
-# APP START
 
 # Keep separate lists of user-inputted data and data read from database
 # This avoids duplicating rows

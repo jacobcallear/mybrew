@@ -1,10 +1,10 @@
 #! python3
-'''Test `menu` module.'''
+'''Test `cli` module.'''
 from random import randint
 
 import pytest
 
-from mybrew.menu import get_index_input, get_input, print_lists, select_option
+from mybrew.cli import get_index_input, get_input, select_option
 
 def test_get_input(monkeypatch):
     '''Ensure `get_input` function returns correct type and value.'''
