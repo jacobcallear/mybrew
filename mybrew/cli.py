@@ -112,3 +112,17 @@ def get_index_input(text, list_):
         index = get_input(f'{text} (number from list)', int)
         if 0 < index <= length:
             return list_[index - 1]
+
+def get_credentials():
+    '''Get MySQL database credentials from user input'''
+    print('Credentials not found')
+    print('Enter your credentials')
+    host = get_input('host')
+    user = get_input('user')
+    port = get_input('port', return_type=int)
+    return {
+        'host': host,
+        'user': user,
+        'port': port,
+        'db': 'mybrew'
+    }

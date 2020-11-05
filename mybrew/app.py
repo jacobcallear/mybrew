@@ -7,7 +7,7 @@ from mybrew.data_handling import (read_classes_from_mysql,
                                   write_classes_to_mysql,
                                   are_credentials_valid)
 from mybrew.credentials import credentials
-from mybrew.cli import get_index_input, get_input, select_option
+from mybrew.cli import get_index_input, get_input, get_credentials, select_option
 from mybrew.list_handling import swap_lists, want_to_overwrite, print_lists
 
 
@@ -26,6 +26,8 @@ if not are_credentials_valid(credentials):
     # TODO: Ask user for credentials, write to credentials.py
     # Ask for password again!
     print('Invalid credentials')
+    credentials = get_credentials()
+    credentials['password'] = input('Password: ')
     pass
 
 while True:
@@ -51,11 +53,11 @@ while True:
                        title='drinks', pause=True)
         # Save drinks to MySQL table
         elif option == 2:
-            write_classes_to_mysql(drinks['from-user'], 'drinks')
+            write_classes_to_mysql(drinks['from-user'], 'drinks', credentials)
             swap_lists(drinks)
         # Read drinks from MySQL table
         elif option == 3:
-            drinks['from-db'] = read_classes_from_mysql(Drink, 'drinks')
+            drinks['from-db'] = read_classes_from_mysql(Drink, 'drinks', credentials)
 
     # ==============================
     # PEOPLE
@@ -73,11 +75,11 @@ while True:
                         title='people', pause=True)
         # Save people to MySQL table
         elif option == 2:
-            write_classes_to_mysql(people['from-user'], 'people')
+            write_classes_to_mysql(people['from-user'], 'people', credentials)
             swap_lists(people)
         # Read people from MySQL table
         elif option == 3:
-            people['from-db'] = read_classes_from_mysql(Person, 'people')
+            people['from-db'] = read_classes_from_mysql(Person, 'people', credentials)
     
     # ==============================
     # ROUND
@@ -110,12 +112,12 @@ while True:
         elif option == 2:
             if not want_to_overwrite(rounds):
                 continue
-            write_classes_to_mysql(rounds, 'rounds', truncate=True)
+            write_classes_to_mysql(rounds, 'rounds', credentials, truncate=True)
         # Read rounds from MySQL table
         elif option == 3:
             if not want_to_overwrite(rounds):
                 continue
-            rounds = read_classes_from_mysql(Order, 'rounds')
+            rounds = read_classes_from_mysql(Order, 'rounds', credentials)
             
     # ==============================
     # PREFERENCES
@@ -141,12 +143,14 @@ while True:
             print_lists(preferences['from-db'], preferences['from-user'],
                         title='preferences')
         elif option == 2:
-            write_classes_to_mysql(preferences['from-user'],
-                                   table='preferences')
+            write_classes_to_mysql(
+                preferences['from-user'], 'preferences', credentials
+            )
             swap_lists(preferences)
         elif option == 3:
-            preferences['from-db'] = read_classes_from_mysql(Preference,
-                                                             table='preferences')
+            preferences['from-db'] = read_classes_from_mysql(
+                Preference,'preferences', credentials
+            )
             
     #==============================
     # OTHER
