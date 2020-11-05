@@ -3,13 +3,12 @@
 from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
-from mybrew.data_handling import (read_classes_from_mysql,
-                                  write_classes_to_mysql,
-                                  are_credentials_valid)
+from mybrew.cli import get_index_input, get_input, select_option
 from mybrew.credentials import credentials
-from mybrew.cli import get_index_input, get_input, get_credentials, select_option
-from mybrew.list_handling import swap_lists, want_to_overwrite, print_lists
-
+from mybrew.data_handling import (are_credentials_valid,
+                                  read_classes_from_mysql,
+                                  write_classes_to_mysql)
+from mybrew.list_handling import print_lists, swap_lists, want_to_overwrite
 
 # Keep separate lists of user-inputted data and data read from database
 # This avoids duplicating rows
@@ -23,12 +22,9 @@ rounds = []
 credentials['password'] = input('Password: ')
 
 if not are_credentials_valid(credentials):
-    # TODO: Ask user for credentials, write to credentials.py
-    # Ask for password again!
-    print('Invalid credentials')
-    credentials = get_credentials()
-    credentials['password'] = input('Password: ')
-    pass
+    raise ValueError('''Invalid password or credentials
+Ensure correct credentials are stored in mybrew/credentials.json''')
+
 
 while True:
     # Choose option
