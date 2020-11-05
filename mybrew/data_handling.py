@@ -11,6 +11,71 @@ def are_credentials_valid(credentials):
         return False
     return True
 
+def setup_mybrew_database(credentials):
+    sql_create_database = 'CREATE DATABASE IF NOT EXISTS mybrew'
+    sql_create_drinks = dedent('''\
+        CREATE TABLE IF NOT EXISTS drinks (
+            id MEDIUMINT NOT NULL AUTO_INCREMENT,
+            name VARCHAR(20) NOT NULL,
+            volume_ml INTEGER NOT NULL,
+            hot TINYINT NOT NULL,
+            fizzy TINYINT NOT NULL,
+            PRIMARY KEY (id)
+        );''')
+    sql_create_people = dedent('''\
+        CREATE TABLE IF NOT EXISTS people (
+            id MEDIUMINT NOT NULL AUTO_INCREMENT,
+            name VARCHAR(20) NOT NULL,
+            age INTEGER NOT NULL,
+            sex VARCHAR(20) NOT NULL,
+            PRIMARY KEY (id)
+        );''')
+    sql_create_preferences = dedent('''\
+        CREATE TABLE IF NOT EXISTS preferences (
+            id MEDIUMINT NOT NULL AUTO_INCREMENT,
+            person_name VARCHAR(20) NOT NULL,
+            person_age INTEGER NOT NULL,
+            person_sex VARCHAR(20) NOT NULL,
+            drink_name VARCHAR(20) NOT NULL,
+            drink_volume_ml INTEGER NOT NULL,
+            drink_hot TINYINT NOT NULL,
+            drink_fizzy TINYINT NOT NULL,
+            PRIMARY KEY (id)
+        );''')
+    sql_create_rounds = dedent('''
+        CREATE TABLE IF NOT EXISTS rounds (
+            id MEDIUMINT NOT NULL AUTO_INCREMENT,
+            person_name VARCHAR(20) NOT NULL,
+            person_age INTEGER NOT NULL,
+            person_sex VARCHAR(20) NOT NULL,
+            drink_name VARCHAR(20) NOT NULL,
+            drink_volume_ml INTEGER NOT NULL,
+            drink_hot TINYINT NOT NULL,
+            drink_fizzy TINYINT NOT NULL,
+            PRIMARY KEY (id)
+        );''')
+    # Create mybrew database if not exists
+    connection = pymysql.connect(**credentials)
+    try:
+        cursor = connection.cursor()
+        cursor.execute(sql_create_database)
+    finally:
+        cursor.close()
+        connection.close()
+
+    # Create four tables if not exists
+    credentials['db'] = 'mybrew'
+    connection = pymysql.connect(**credentials)
+    try:
+        cursor = connection.cursor()
+        cursor.execute(sql_create_drinks)
+        cursor.execute(sql_create_people)
+        cursor.execute(sql_create_preferences)
+        cursor.execute(sql_create_rounds)
+    finally:
+        cursor.close()
+        connection.close()
+    
 def read_classes_from_mysql(cls, table, credentials):
     '''Returns list of one class instance for each row in MySQL table.'''
     connection = pymysql.connect(**credentials)

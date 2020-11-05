@@ -7,6 +7,7 @@ from mybrew.cli import get_index_input, get_input, select_option
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
+                                  setup_mybrew_database,
                                   write_classes_to_mysql)
 from mybrew.list_handling import print_lists, swap_lists, want_to_overwrite
 
@@ -25,6 +26,9 @@ if not are_credentials_valid(credentials):
     raise ValueError('''Invalid password or credentials
 Ensure correct credentials are stored in mybrew/credentials.json''')
 
+# Ensure mybrew database exists with appropriate tables
+setup_mybrew_database(credentials)
+credentials['db'] = 'mybrew'
 
 while True:
     # Choose option
