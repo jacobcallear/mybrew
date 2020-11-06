@@ -4,7 +4,7 @@ from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
 from mybrew.cli import (get_index_input, get_input, ask_for_password,
-                        mybrew_prompt)
+                        mybrew_prompt, is_valid_command, parse_command)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
@@ -32,11 +32,15 @@ setup_mybrew_database(credentials)
 credentials['db'] = 'mybrew'
 
 while True:
-    # Choose option
-    try:
-        action, table = mybrew_prompt()
-    except ValueError:
+    # Get user input
+    user_input = mybrew_prompt()
+    if user_input == '':
         continue
+    if not is_valid_command(user_input):
+        print('Invalid command')
+        continue
+    action, table = parse_command(user_input)
+
     # ==============================
     if table == 'drinks':
         if action == 'add':
