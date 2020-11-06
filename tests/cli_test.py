@@ -22,6 +22,7 @@ from mybrew.cli import is_valid_command, parse_command, print_error
     (['unrecognised'], False)
 ])
 def test_is_valid_command(input_command, expected_output):
+    '''Test `is_valid_command` function returns True only for valid commands.'''
     assert is_valid_command(input_command) == expected_output
 
 @pytest.mark.parametrize('input_command', [
@@ -34,6 +35,8 @@ def test_is_valid_command(input_command, expected_output):
     ['exit'],
 ])
 def test_parse_command(input_command):
+    '''Tests `parse_command` output is equal to a tuple of `(verb, table)` or
+    `(verb, None)`.'''
     if len(input_command) == 1:
         assert parse_command(input_command) == tuple(input_command + [None])
     else:

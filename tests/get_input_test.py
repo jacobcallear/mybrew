@@ -1,5 +1,5 @@
 #! python3
-'''Test `cli` module.'''
+'''Test get_input module.'''
 from random import randint
 
 import pytest
