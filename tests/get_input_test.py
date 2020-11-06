@@ -6,26 +6,20 @@ import pytest
 
 from mybrew.get_input import get_index_input, get_input
 
-def test_get_input(monkeypatch):
+@pytest.mark.parametrize('user_input, return_type, expected_output', [
+    ('LFJ(£*Jfdksfj£F(*J£F', str, 'LFJ(£*Jfdksfj£F(*J£F'),
+    ('239578420357892359408', int, 239578420357892359408),
+    ('y', bool, True),
+    ('n', bool, False)
+])
+def test_get_input(monkeypatch, user_input, return_type, expected_output):
     '''Ensure `get_input` function returns correct type and value.'''
-    def inner_test(monkeypatch, user_input, expected_output):
-        '''Assert expected output == actual output'''
-        # Arrange
-        monkeypatch.setattr('builtins.input', lambda _: user_input)
-        # Act
-        actual_output = get_input('meaningless text',
-                                  return_type = type(expected_output))
-        # Assert
-        assert actual_output == expected_output
-    # ----------
-    # Integer
-    inner_test(monkeypatch, '12', expected_output = 12)
-    # String
-    text = 'LFJ(£*Jfdksfj£F(*J£F'
-    inner_test(monkeypatch, text, expected_output = text)
-    # Boolean
-    inner_test(monkeypatch, 'y', expected_output = True)
-    inner_test(monkeypatch, 'n', expected_output = False)
+    # Arrange
+    monkeypatch.setattr('builtins.input', lambda _: user_input)
+    # Act
+    actual_output = get_input('Meaningless string', return_type=return_type)
+    # Assert
+    assert actual_output == expected_output
 
 def test_get_index_input(monkeypatch):
     '''Ensure `get_index_input` function returns correct item from list.
