@@ -4,7 +4,7 @@ from random import randint
 
 import pytest
 
-from mybrew.cli import get_index_input, get_input, select_option
+from mybrew.get_input import get_index_input, get_input
 
 def test_get_input(monkeypatch):
     '''Ensure `get_input` function returns correct type and value.'''
@@ -51,23 +51,3 @@ def test_get_index_input_error(monkeypatch):
     with pytest.raises(ValueError):
         list_ = []
         get_index_input('meaningless text', list_)
-
-def test_select_option(monkeypatch):
-    '''Test `select_option` function.'''
-    # Arrange
-    user_input = '1'
-    monkeypatch.setattr('builtins.input', lambda _: user_input)
-    expected_output = (int(user_input), int(user_input))
-    # Act
-    actual_output = select_option()
-    # Assert
-    assert actual_output == expected_output
-
-def test_select_option_error(monkeypatch):
-    '''Ensure `select_option` raises ValueError when choice out of range'''
-    # Arrange
-    user_input = '5'
-    monkeypatch.setattr('builtins.input', lambda _: user_input)
-    # Act, assert
-    with pytest.raises(ValueError):
-        select_option()
