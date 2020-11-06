@@ -89,7 +89,7 @@ def ask_for_password():
 
 def print_error(commands):
     '''Prints red error message.'''
-    error_message = f"ERROR: `{' '.join(commands)}` is not a recognised command`"
+    error_message = f"ERROR: `{' '.join(commands)}` is not a recognised command"
     print_formatted_text(FormattedText([('#FF0000', error_message)]))
 
 def print_welcome():
