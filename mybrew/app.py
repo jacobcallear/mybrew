@@ -3,8 +3,9 @@
 from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
-from mybrew.cli import (ask_for_password, is_valid_command, mybrew_prompt,
-                        parse_command, print_error, print_help, print_welcome)
+from mybrew.cli import (ask_for_password, exit_if_confirm, is_valid_command,
+                        mybrew_prompt, parse_command, print_error, print_help,
+                        print_welcome)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
@@ -153,6 +154,7 @@ while True:
         if action == 'clear':
             system('cls')
         elif action == 'exit':
+            exit_if_confirm()
             print('Exiting program...')
             break
         elif action == 'help':
