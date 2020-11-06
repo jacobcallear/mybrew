@@ -26,6 +26,9 @@ def mybrew_prompt():
 
     return Command(action, table)
 
+def ask_for_password():
+    '''Get user input while hiding on-screen input with asterisks.'''
+    return prompt('Password: ', is_password=True)
 
 def select_option():
     '''Prints options menu and returns user input as tuple[int].'''

@@ -3,7 +3,8 @@
 from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
-from mybrew.cli import get_index_input, get_input, select_option
+from mybrew.cli import (get_index_input, get_input, ask_for_password,
+                        select_option)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
@@ -20,7 +21,7 @@ drinks, people, rounds, preferences = (
 rounds = []
 
 # Get password
-credentials['password'] = input('Password: ')
+credentials['password'] = ask_for_password()
 
 if not are_credentials_valid(credentials):
     raise ValueError('''Invalid password or credentials
