@@ -76,7 +76,7 @@ def parse_command(command):
     elif table == 'preference':
         table = 'preferences'
     elif table == 'round':
-        table = 'round'
+        table = 'rounds'
     # Return parsed input
     Command = namedtuple('Command', 'action table')
     return Command(action, table)
