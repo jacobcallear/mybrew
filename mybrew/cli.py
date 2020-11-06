@@ -2,6 +2,30 @@
 '''Defines functions to get user input and print lists.'''
 
 from collections import namedtuple
+from prompt_toolkit import prompt
+from prompt_toolkit.formatted_text import FormattedText
+
+def mybrew_prompt():
+    '''Shows mybrew prompt and returns category and option chosen'''
+    # Get user input
+    user_input = prompt(FormattedText([('#268bd2', 'mybrew> ')]))
+    user_input = user_input.split(' ')
+    Command = namedtuple('Command', 'action table')
+
+    # If invalid input length
+    if len(user_input) == 0:
+        return None
+    if len(user_input) > 2:
+        raise NameError('Command not recognised')
+
+    # If valid input length
+    try:
+        action, table = user_input
+    except ValueError:
+        action, table = user_input[0], None
+
+    return Command(action, table)
+
 
 def select_option():
     '''Prints options menu and returns user input as tuple[int].'''
