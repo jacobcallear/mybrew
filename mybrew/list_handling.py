@@ -1,6 +1,6 @@
 '''Provides functions to handle python lists.'''
 
-from cli import get_input
+from mybrew.cli import get_input
 
 def swap_lists(dict_of_lists):
     '''Extends 'from-db' list with contents of 'from-user', then clears 'from-user'.
