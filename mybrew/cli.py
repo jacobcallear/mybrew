@@ -4,13 +4,34 @@
 from collections import namedtuple
 from prompt_toolkit import prompt
 from prompt_toolkit.formatted_text import FormattedText
+from prompt_toolkit.completion import NestedCompleter
 
 def mybrew_prompt():
     '''Shows mybrew prompt and returns category and option chosen'''
+    # Define command auto-completion
+    table_names = {
+        'drinks': None,
+        'people': None,
+        'preferences': None,
+        'rounds': None
+    }
+    mybrew_completer = NestedCompleter.from_nested_dict({
+        'add': {
+            'drink': None,
+            'person': None,
+            'preference': None,
+            'round': None
+        },
+        'print': table_names,
+        'save': table_names,
+        'read': table_names,
+        'clear': None,
+        'exit': None
+    })
     # Get user input
-    user_input = prompt(FormattedText([('#268bd2', 'mybrew> ')]))
+    user_input = prompt(FormattedText([('#268bd2', 'mybrew> ')]),
+                        completer=mybrew_completer)
     user_input = user_input.split(' ')
-    Command = namedtuple('Command', 'action table')
 
     # If invalid input length
     if len(user_input) == 0:
@@ -24,6 +45,7 @@ def mybrew_prompt():
     except ValueError:
         action, table = user_input[0], None
 
+    Command = namedtuple('Command', 'action table')
     return Command(action, table)
 
 def ask_for_password():
