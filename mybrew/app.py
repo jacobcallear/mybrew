@@ -3,14 +3,14 @@
 from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
-from mybrew.cli import (ask_for_password, get_index_input, get_input,
-                        is_valid_command, mybrew_prompt, parse_command,
-                        print_error)
+from mybrew.cli import (ask_for_password, is_valid_command, mybrew_prompt,
+                        parse_command, print_error)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
                                   setup_mybrew_database,
                                   write_classes_to_mysql)
+from mybrew.get_input import get_index_input
 from mybrew.list_handling import print_lists, swap_lists, want_to_overwrite
 
 # Keep separate lists of user-inputted data and data read from database
@@ -45,12 +45,9 @@ while True:
     # ==============================
     if table == 'drinks':
         if action == 'add':
-            print('Adding a drink:')
-            name = get_input('drink name')
-            volume = get_input('drink volume (ml)', int)
-            hot = get_input('"y" if drink is hot, otherwise "n"', bool)
-            fizzy = get_input('"y" if drink is fizzy, otherwise "n"', bool)
-            drinks['from-user'].append(Drink(name, volume, hot, fizzy))
+            print('Adding a drink...')
+            drink = Drink.from_input()
+            drinks['from-user'].append(drink)
 
         elif action == 'print':
             print_lists(drinks['from-db'], drinks['from-user'],
@@ -66,11 +63,9 @@ while True:
     # ==============================
     elif table == 'people':
         if action == 'add':
-            print('Adding a person:')
-            name = get_input("person's name")
-            age = get_input(f"{name}'s age in years", int)
-            sex = get_input(f"{name}'s sex").lower()
-            people['from-user'].append(Person(name, age, sex))
+            print('Adding a person...')
+            person = Person.from_input()
+            people['from-user'].append(person)
 
         elif action == 'print':
             print_lists(people['from-db'], people['from-user'],
@@ -100,6 +95,7 @@ while True:
                 continue
             rounds = []
             # Loop through people, choose a drink for each
+            print('Adding round...')
             print_lists(all_drinks, title='drinks', pause=False)
             for person in all_people:
                 drink = get_index_input(f"{person.name}'s favourite drink",
