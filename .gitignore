@@ -3,6 +3,7 @@
 /Include/
 /Lib/
 /Scripts/
+/venv/
 
 # Ignore all pycache folders recursively
 __pycache__/
