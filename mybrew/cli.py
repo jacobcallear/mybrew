@@ -2,6 +2,7 @@
 '''Defines functions to parse user commands at prompt.'''
 
 from collections import namedtuple
+from textwrap import dedent
 
 from prompt_toolkit import print_formatted_text, prompt
 from prompt_toolkit.completion import NestedCompleter
@@ -28,6 +29,7 @@ def mybrew_prompt():
         'print': table_names,
         'save': table_names,
         'read': table_names,
+        'help': None,
         'clear': None,
         'exit': None
     })
@@ -42,7 +44,7 @@ def is_valid_command(args):
     if len(args) > 2:
         return False
     if len(args) == 1:
-        valid_commands = {'clear', 'exit', ''}
+        valid_commands = {'clear', 'exit', 'help', ''}
         if args[0] in valid_commands:
             return True
         return False
@@ -89,3 +91,48 @@ def print_error(commands):
     '''Prints red error message.'''
     error_message = f"ERROR: `{' '.join(commands)}` is not a recognised command`"
     print_formatted_text(FormattedText([('#FF0000', error_message)]))
+
+def print_welcome():
+    green = '#00ff00'
+    print_formatted_text(FormattedText([
+        ('', '\nWelcome to '),
+        ('#268bd2', 'mybrew'),
+        ('', '!\n\n'),
+        ('', 'Enter commands at the prompt\n'),
+        ('', 'Type '),
+        (green, 'help'),
+        ('', ' to list available commands and tables')
+    ]))
+    print()
+
+def print_help():
+    heading_colour = '#859900'
+    green = '#00ff00'
+    tables_text = dedent('''\
+        - drinks
+        - people
+        - preferences
+        - rounds
+    ''')
+    print_formatted_text(FormattedText([
+        # List commands
+        (heading_colour, 'Commands:\n'),
+        (green, 'add'.ljust(6)),
+        ('', '<table>    Add to <table>\n'),
+        (green, 'print'.ljust(6)),
+        ('', '<table>    Print <table>\n'),
+        (green, 'read'.ljust(6)),
+        ('', '<table>    Read from <table>\n'),
+        (green, 'save'.ljust(6)),
+        ('', '<table>    Save to <table>\n'),
+        (green, 'clear'.ljust(17)),
+        ('', 'Clear screen\n'),
+        (green, 'exit'.ljust(17)),
+        ('', 'Exit mybrew\n'),
+        (green, 'help'.ljust(17)),
+        ('', 'Print help text\n'),
+        ('', '\n'),
+        # List tables
+        (heading_colour, 'Tables:\n'),
+        ('', tables_text)
+    ]))

@@ -4,7 +4,7 @@ from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
 from mybrew.cli import (ask_for_password, is_valid_command, mybrew_prompt,
-                        parse_command, print_error)
+                        parse_command, print_error, print_help, print_welcome)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
@@ -32,6 +32,7 @@ Ensure correct credentials are stored in mybrew/credentials.json''')
 setup_mybrew_database(credentials)
 credentials['db'] = 'mybrew'
 
+print_welcome()
 while True:
     # Get user input
     user_input = mybrew_prompt()
@@ -154,3 +155,5 @@ while True:
         elif action == 'exit':
             print('Exiting program...')
             break
+        elif action == 'help':
+            print_help()
