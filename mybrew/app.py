@@ -4,7 +4,7 @@ from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
 from mybrew.cli import (get_index_input, get_input, ask_for_password,
-                        select_option)
+                        mybrew_prompt)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
@@ -34,59 +34,53 @@ credentials['db'] = 'mybrew'
 while True:
     # Choose option
     try:
-        category, option = select_option()
+        action, table = mybrew_prompt()
     except ValueError:
         continue
     # ==============================
-    # DRINKS
-    if category == 0:
-        # Add a drink
-        if option == 0:
+    if table == 'drinks':
+        if action == 'add':
             print('Adding a drink:')
             name = get_input('drink name')
             volume = get_input('drink volume (ml)', int)
             hot = get_input('"y" if drink is hot, otherwise "n"', bool)
             fizzy = get_input('"y" if drink is fizzy, otherwise "n"', bool)
             drinks['from-user'].append(Drink(name, volume, hot, fizzy))
-        # Print drinks
-        elif option == 1:
+
+        elif action == 'print':
             print_lists(drinks['from-db'], drinks['from-user'],
                        title='drinks', pause=True)
-        # Save drinks to MySQL table
-        elif option == 2:
+
+        elif action == 'save':
             write_classes_to_mysql(drinks['from-user'], 'drinks', credentials)
             swap_lists(drinks)
-        # Read drinks from MySQL table
-        elif option == 3:
+
+        elif action == 'read':
             drinks['from-db'] = read_classes_from_mysql(Drink, 'drinks', credentials)
 
     # ==============================
-    # PEOPLE
-    elif category == 1:
-        # Add a person
-        if option == 0:
+    elif table == 'people':
+        if action == 'add':
             print('Adding a person:')
             name = get_input("person's name")
             age = get_input(f"{name}'s age in years", int)
             sex = get_input(f"{name}'s sex").lower()
             people['from-user'].append(Person(name, age, sex))
-        # Print people
-        elif option == 1:
+
+        elif action == 'print':
             print_lists(people['from-db'], people['from-user'],
                         title='people', pause=True)
-        # Save people to MySQL table
-        elif option == 2:
+
+        elif action == 'save':
             write_classes_to_mysql(people['from-user'], 'people', credentials)
             swap_lists(people)
-        # Read people from MySQL table
-        elif option == 3:
+
+        elif action == 'read':
             people['from-db'] = read_classes_from_mysql(Person, 'people', credentials)
     
     # ==============================
-    # ROUND
-    elif category == 2:
-        # Make a round
-        if option == 0:
+    elif table == 'rounds':
+        if action == 'add':
             # Check drinks and people are not empty
             all_drinks = drinks['from-db'] + drinks['from-user']
             all_people = people['from-db'] + people['from-user']
@@ -106,25 +100,24 @@ while True:
                 drink = get_index_input(f"{person.name}'s favourite drink",
                                         all_drinks)
                 rounds.append(Order(person, drink))
-        # Print rounds
-        elif option == 1:
+
+        elif action == 'print':
             print_lists(rounds, title='round', pause=True)
-        # Save rounds to MySQL table - OVERWRITE previous round
-        elif option == 2:
+
+        elif action == 'save':
             if not want_to_overwrite(rounds):
                 continue
             write_classes_to_mysql(rounds, 'rounds', credentials, truncate=True)
-        # Read rounds from MySQL table
-        elif option == 3:
+
+        elif action == 'read':
             if not want_to_overwrite(rounds):
                 continue
             rounds = read_classes_from_mysql(Order, 'rounds', credentials)
             
     # ==============================
-    # PREFERENCES
-    elif category == 3:
-        # Add a drink preference for a person
-        if option == 0:
+    elif table == 'preferences':
+
+        if action == 'add':
             # Check drinks and people are not empty
             all_drinks = drinks['from-db'] + drinks['from-user']
             all_people = people['from-db'] + people['from-user']
@@ -139,25 +132,24 @@ while True:
             print_lists(all_drinks, title='drinks', pause=False)
             drink = get_index_input('a drink', all_drinks)
             preferences['from-user'].append(Preference(person, drink))
-        # Print preferences
-        elif option == 1:
+
+        elif action == 'print':
             print_lists(preferences['from-db'], preferences['from-user'],
                         title='preferences')
-        elif option == 2:
+        elif action == 'save':
             write_classes_to_mysql(
                 preferences['from-user'], 'preferences', credentials
             )
             swap_lists(preferences)
-        elif option == 3:
+        elif action == 'read':
             preferences['from-db'] = read_classes_from_mysql(
                 Preference,'preferences', credentials
             )
             
     #==============================
-    # OTHER
-    elif category == 4:
-        if option == 0:
+    elif table == None:
+        if action == 'clear':
             system('cls')
-        elif option == 1:
+        elif action == 'exit':
             print('Exiting program...')
             break
