@@ -7,10 +7,10 @@ MySQL database, and associate them with each other as preferences and rounds.
 
 1. Install [MySQL](https://www.mysql.com/) and
    [Python](https://www.python.org/downloads/)
-2. Download or clone `mybrew`
-2. Ensure MySQL credentials (`host`, `port`, and `user`) in
-   `mybrew/mybrew/credentials.py` are correct
-3. Install python requirements
+2. [Download](https://github.com/jacobcallear/mybrew/archive/master.zip)
+   or clone this repository
+3. Ensure MySQL credentials in *mybrew/credentials.py* are correct
+4. Install python requirements
    ```bash
    $ cd mybrew
    $ pip install -r requirements.txt
