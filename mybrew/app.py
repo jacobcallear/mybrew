@@ -99,7 +99,7 @@ while True:
             print('Adding round...')
             print_lists(all_drinks, title='drinks', pause=False)
             for person in all_people:
-                drink = get_index_input(f"{person.name}'s favourite drink",
+                drink = get_index_input(f"Choose {person.name}'s favourite drink",
                                         all_drinks)
                 rounds.append(Order(person, drink))
 
@@ -130,9 +130,9 @@ while True:
                 print('Preference cannot be added as no drinks are saved.')
                 continue
             print_lists(all_people, title='people', pause=False)
-            person = get_index_input('a person', all_people)
+            person = get_index_input('Choose a person', all_people)
             print_lists(all_drinks, title='drinks', pause=False)
-            drink = get_index_input('a drink', all_drinks)
+            drink = get_index_input('Choose a drink', all_drinks)
             preferences['from-user'].append(Preference(person, drink))
 
         elif action == 'print':

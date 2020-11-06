@@ -5,16 +5,13 @@ Used in `mybrew.classes`
 
 def get_input(text, return_type=str):
     '''Get user input and convert to desired type.'''
-    def strip_input(text):
-        return input(f'Enter {text}: ').strip()
-    # ----------
     # Return string
     if return_type is str:
-        return strip_input(text)
+        return input(text).strip()
     # Return True for 'y', False for 'n'
     if return_type is bool:
         while True:
-            yes_no = strip_input(text).strip('" ').lower()
+            yes_no = input(text).strip('" ').lower()
             if yes_no == 'y':
                 return True
             if yes_no == 'n':
@@ -24,7 +21,7 @@ def get_input(text, return_type=str):
     if return_type is int:
         while True:
             try:
-                return int(strip_input(text))
+                return int(input(text).strip())
             except ValueError:
                 print('Please enter an integer')
     
@@ -34,6 +31,6 @@ def get_index_input(text, list_):
     if length == 0:
         raise ValueError('Empty list')
     while True:
-        index = get_input(f'{text} (number from list)', int)
+        index = get_input(f'{text} (number from list): ', int)
         if 0 < index <= length:
             return list_[index - 1]

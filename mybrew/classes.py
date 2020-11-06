@@ -29,9 +29,9 @@ class Person:
 
     @classmethod
     def from_input(cls):
-        name = get_input("person's name")
-        age = get_input(f"{name}'s age in years", int)
-        sex = get_input(f"{name}'s sex").lower()
+        name = get_input('Name: ')
+        age = get_input('Age (years): ', int)
+        sex = get_input('Gender: ').lower()
         return cls(name, age, sex)
 
 class Drink:
@@ -59,10 +59,10 @@ class Drink:
 
     @classmethod
     def from_input(cls):
-        name = get_input('drink name')
-        volume = get_input('drink volume (ml)', int)
-        hot = get_input('"y" if drink is hot, otherwise "n"', bool)
-        fizzy = get_input('"y" if drink is fizzy, otherwise "n"', bool)
+        name = get_input('Name: ')
+        volume = get_input('Volume (ml): ', int)
+        hot = get_input('Temperature ("y" if hot, otherwise "n"): ', bool)
+        fizzy = get_input('Fizziness ("y" if fizzy, otherwise "n"): ', bool)
         return cls(name, volume, hot, fizzy)
 
 class Order:
