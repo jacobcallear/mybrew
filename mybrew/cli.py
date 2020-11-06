@@ -2,9 +2,10 @@
 '''Defines functions to get user input and print lists.'''
 
 from collections import namedtuple
-from prompt_toolkit import prompt
-from prompt_toolkit.formatted_text import FormattedText
+
+from prompt_toolkit import print_formatted_text, prompt
 from prompt_toolkit.completion import NestedCompleter
+from prompt_toolkit.formatted_text import FormattedText
 
 def mybrew_prompt():
     '''Provides prompt and command auto-completion.
@@ -83,7 +84,12 @@ def parse_command(command):
 def ask_for_password():
     '''Get user input while hiding on-screen input with asterisks.'''
     return prompt('Password: ', is_password=True)
-        
+
+def print_error(commands):
+    '''Prints red error message.'''
+    error_message = f"ERROR: `{' '.join(commands)}` is not a recognised command`"
+    print_formatted_text(FormattedText([('#FF0000', error_message)]))
+
 def get_input(text, return_type=str):
     '''Get user input and convert to desired type.'''
     def strip_input(text):

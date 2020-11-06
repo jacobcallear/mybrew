@@ -3,8 +3,9 @@
 from os import system
 
 from mybrew.classes import Drink, Order, Person, Preference
-from mybrew.cli import (get_index_input, get_input, ask_for_password,
-                        mybrew_prompt, is_valid_command, parse_command)
+from mybrew.cli import (ask_for_password, get_index_input, get_input,
+                        is_valid_command, mybrew_prompt, parse_command,
+                        print_error)
 from mybrew.credentials import credentials
 from mybrew.data_handling import (are_credentials_valid,
                                   read_classes_from_mysql,
@@ -37,7 +38,7 @@ while True:
     if user_input == '':
         continue
     if not is_valid_command(user_input):
-        print('Invalid command')
+        print_error(user_input)
         continue
     action, table = parse_command(user_input)
 
