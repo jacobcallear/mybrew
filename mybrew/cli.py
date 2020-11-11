@@ -93,11 +93,17 @@ def exit_if_confirm():
 
 def print_error(commands):
     '''Prints red error message.'''
+    red = '#dc322f'
+    green = '#859900'
     error_message = f"ERROR: `{' '.join(commands)}` is not a recognised command"
-    print_formatted_text(FormattedText([('#FF0000', error_message)]))
+    print_formatted_text(FormattedText([
+        (red, error_message),
+        (red, '\nEnter '),
+        (green, 'help '),
+        (red, 'to list available commands')]))
 
 def print_welcome():
-    green = '#00ff00'
+    green = '#859900'
     print_formatted_text(FormattedText([
         ('', '\nWelcome to '),
         ('#268bd2', 'mybrew'),
@@ -110,8 +116,8 @@ def print_welcome():
     print()
 
 def print_help():
-    heading_colour = '#859900'
-    green = '#00ff00'
+    heading_colour = '#d33682'
+    green = '#859900'
     tables_text = dedent('''\
         - drinks
         - people
