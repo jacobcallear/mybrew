@@ -2,8 +2,25 @@
 
 Intuitive command-line interface for a cafe database.
 
-Add people and drinks to a MySQL database, and associate them with each other as
-preferences and rounds.
+Add people, drinks, preferences, and rounds to a MySQL database without writing
+complicated SQL queries.
+
+## Demo
+
+1. Open a terminal and enter `python -m mybrew`
+
+2. Enter your MySQL password - the required database and tables are
+   automatically set up for you
+
+![Screen recording of mybrew starting in terminal](/img/startup.gif)
+
+3. You are now in the `mybrew` CLI! Use the `help` command to list options
+
+![Screenshot of mybrew help command output](/img/help.png)
+
+4. Auto-completion and suggestions will help you get the hang of `mybrew`
+
+![Screen recording of mybrew command auto-suggestion](/img/auto-suggestion.gif)
 
 ## Set-Up
 
@@ -17,23 +34,6 @@ preferences and rounds.
    $ cd mybrew
    $ pip install -r requirements.txt
    ```
-
-## Demo
-
-1. Open a terminal and enter `python -m mybrew`
-
-2. Enter your MySQL password - the required database and tables are
-   automatically set up for you
-
-![Animation of mybrew starting in terminal](demo-gifs/startup.gif)
-
-3. You are now in the `mybrew` CLI! Use the `help` command to list options
-
-![Animation of help command in mybrew](demo-gifs/help-command.gif)
-
-4. Auto-completion and suggestions will help you get the hang of `mybrew`
-
-![Animation of auto-completing commands in mybrew](demo-gifs/autocompletion.gif)
 
 ## Trouble Shooting
 
