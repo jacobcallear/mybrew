@@ -27,7 +27,7 @@ def test_get_index_input(monkeypatch):
     '''
     # Arrange
     list_ = list(range(10))
-    user_input = str(randint(0, len(list_) - 1))
+    user_input = str(randint(1, len(list_)))
     monkeypatch.setattr('builtins.input', lambda _: user_input)
     expected_output = list_[int(user_input) - 1]
     # Act
