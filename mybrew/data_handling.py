@@ -85,7 +85,10 @@ def read_classes_from_mysql(cls, table, credentials):
         cursor.execute(f'SELECT * FROM {table};')
         # Return list of class instances
         classes = []
-        while row := cursor.fetchone():
+        while True:
+            row = cursor.fetchone()
+            if row is None:
+                break
             # Ignore first field (ID)
             classes.append(cls.from_list(row[1:]))
         print(f'Read data from {credentials["db"]}.{table}')
