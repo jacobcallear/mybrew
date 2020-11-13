@@ -1,5 +1,7 @@
 # mybrew
 
+![Python tests and lints status](https://github.com/jacobcallear/mybrew/workflows/tests/badge.svg)
+
 Intuitive command-line interface for a cafe database.
 
 Add people, drinks, preferences, and rounds to a MySQL database without writing
