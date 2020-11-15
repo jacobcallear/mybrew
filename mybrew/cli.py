@@ -89,7 +89,7 @@ def ask_for_password():
     return prompt('Password: ', is_password=True)
 
 def exit_if_confirm():
-    confirm('Do you really want to exit?')
+    return confirm('Do you really want to exit?')
 
 def print_error(commands):
     '''Prints red error message.'''

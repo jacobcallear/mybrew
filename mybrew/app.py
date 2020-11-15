@@ -154,8 +154,8 @@ while True:
         if action == 'clear':
             system('cls')
         elif action == 'exit':
-            exit_if_confirm()
-            print('Exiting program...')
-            break
+            if exit_if_confirm():
+                print('Exiting program...')
+                break
         elif action == 'help':
             print_help()
