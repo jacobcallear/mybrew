@@ -27,7 +27,7 @@ credentials['password'] = ask_for_password()
 
 if not are_credentials_valid(credentials):
     raise ValueError('''Invalid password or credentials
-Ensure correct credentials are stored in mybrew/credentials.json''')
+Ensure credentials in "mybrew/credentials.py"''')
 
 # Ensure mybrew database exists with appropriate tables
 setup_mybrew_database(credentials)

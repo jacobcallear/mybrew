@@ -27,6 +27,6 @@ def test_swap_lists():
 ])
 def test_want_to_overwrite(monkeypatch, input_list, input_overwrite, expected_output):
     '''Test `want_to_overwrite` function returns False only if the list is
-    populated and the user requests an overwrite.'''
+    populated and the user requests no overwrite.'''
     monkeypatch.setattr('builtins.input', lambda _: input_overwrite)
     assert want_to_overwrite(input_list) == expected_output    
