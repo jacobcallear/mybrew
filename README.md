@@ -24,17 +24,18 @@ complicated SQL queries.
 
 ![Screen recording of mybrew command auto-suggestion](/img/auto-suggestion.gif)
 
-## Set-Up
+## Installation
 
-1. Install [MySQL](https://www.mysql.com/) and
-   [Python](https://www.python.org/downloads/)
+1. Ensure you have [Python](https://www.python.org/downloads/) >= 3.6
+   and [MySQL](https://www.mysql.com/) installed.
 2. [Download](https://github.com/jacobcallear/mybrew/archive/master.zip)
-   or clone this repository
+   and unzip this repository
 3. Ensure MySQL credentials in *mybrew/credentials.py* are correct
-4. Install python requirements
+4. In the terminal, `cd` into the `mybrew/mybrew/` folder
+5. Run the following command:
+
    ```bash
-   $ cd mybrew
-   $ pip install -r requirements.txt
+   pip install .
    ```
 
 ## Trouble Shooting

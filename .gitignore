@@ -1,4 +1,4 @@
-# Ignore some top-level directories 
+# Ignore some top-level directories
 /.vscode/
 /Include/
 /Lib/
@@ -7,6 +7,7 @@
 
 # Ignore all pycache folders recursively
 __pycache__/
+*.egg-info/
 
 # Ignore all coverage and venv files recursively
 .coverage
