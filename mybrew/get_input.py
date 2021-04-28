@@ -24,7 +24,7 @@ def get_input(text, return_type=str):
                 return int(input(text).strip())
             except ValueError:
                 print('Please enter an integer')
-    
+
 def get_index_input(text, list_):
     '''Makes sure user enters a valid index (starts from 1).'''
     length = len(list_)

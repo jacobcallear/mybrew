@@ -75,7 +75,7 @@ def setup_mybrew_database(credentials):
     finally:
         cursor.close()
         connection.close()
-    
+
 def read_classes_from_mysql(cls, table, credentials):
     '''Returns list of one class instance for each row in MySQL table.'''
     connection = pymysql.connect(**credentials)
@@ -138,9 +138,9 @@ def write_classes_to_mysql(class_list, table, credentials, truncate=False):
 
 def to_sql_value_string(values):
     '''Converts list of values to a comma-separated SQL string.
-    
+
     Pretty dodgy! Will fail for strings containing quotation marks.
-    
+
     Example:
         >>> values = ['string', 10, True]
         >>> to_sql_value_string(values)

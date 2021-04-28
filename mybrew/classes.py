@@ -5,7 +5,7 @@ NOTE
 - All classes have a `.to_list()` method and a `.from_list()`
   class method. This is essential for the `app.py` program to work!
 '''
-from mybrew.get_input import get_index_input, get_input
+from mybrew.get_input import get_input
 
 class Person:
     '''Describe a person's name, age, and sex.'''
@@ -16,11 +16,11 @@ class Person:
 
     def __repr__(self):
         return f'{self.name}, {self.age} years old. {self.sex.title()}.'
-    
+
     def to_list(self):
         '''Return list of attributes.'''
         return [self.name, self.age, self.sex]
-    
+
     @classmethod
     def from_list(cls, list_strings):
         '''Initialise class instance from list of 3 attributes.'''
@@ -41,16 +41,16 @@ class Drink:
         self.volume_ml = volume_ml
         self.hot = hot
         self.fizzy = fizzy
-    
+
     def __repr__(self):
         temperature = 'hot' if self.hot else 'cold'
         fizzy = 'fizzy ' if self.fizzy else ''
         return f'{self.volume_ml} ml of {temperature} {fizzy}{self.name}.'
-    
+
     def to_list(self):
         '''Return list of attributes.'''
         return [self.name, self.volume_ml, int(self.hot), int(self.fizzy)]
-    
+
     @classmethod
     def from_list(cls, list_strings):
         '''Initialise class instance from list of 4 attributes.'''
@@ -70,14 +70,14 @@ class Order:
     def __init__(self, person, drink):
         self.person = person
         self.drink = drink
-    
+
     def __repr__(self):
         return f'{self.person.name:<15}: {self.drink}'
-    
+
     def to_list(self):
         '''Return list of attributes.'''
         return self.person.to_list() + self.drink.to_list()
-    
+
     @classmethod
     def from_list(cls, list_strings):
         '''Initialise class instance from list of 7 attributes.'''

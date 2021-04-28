@@ -79,7 +79,7 @@ while True:
 
         elif action == 'read':
             people['from-db'] = read_classes_from_mysql(Person, 'people', credentials)
-    
+
     # ==============================
     elif table == 'rounds':
         if action == 'add':
@@ -116,7 +116,7 @@ while True:
             if not want_to_overwrite(rounds):
                 continue
             rounds = read_classes_from_mysql(Order, 'rounds', credentials)
-            
+
     # ==============================
     elif table == 'preferences':
 
@@ -148,9 +148,9 @@ while True:
             preferences['from-db'] = read_classes_from_mysql(
                 Preference,'preferences', credentials
             )
-            
+
     #==============================
-    elif table == None:
+    elif table is None:
         if action == 'clear':
             system('cls')
         elif action == 'exit':

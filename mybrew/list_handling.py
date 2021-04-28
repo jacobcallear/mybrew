@@ -4,7 +4,7 @@ from mybrew.get_input import get_input
 
 def swap_lists(dict_of_lists):
     '''Extends 'from-db' list with contents of 'from-user', then clears 'from-user'.
-    
+
     This prevents duplication of rows when reading / writing data.
     '''
     dict_of_lists['from-db'].extend(dict_of_lists['from-user'])
